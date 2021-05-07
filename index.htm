@@ -297,7 +297,7 @@
                 // document.getElementById('result').innerHTML = '失败原因排查信息:'+data.message;
             },
 
-            getLocation() {
+            getLocation2() {
                 const self = this;
                 AMap.plugin("AMap.Geolocation", function () {
                     var geolocation = new AMap.Geolocation({
@@ -413,7 +413,7 @@
             }
         },
         created() {
-            this.getLocation();
+            this.getLocation2();
         }
     });
 

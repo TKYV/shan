@@ -3,314 +3,270 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.suoluomei.com/common/js2.0/npm/vant@2.2/lib/index.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>品牌活动</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.2/lib/index.css">
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-        }
-
-        [v-cloak] {
-            display: none !important;
-        }
-
-        /* top */
-        .ltop {
-            display: flex;
-            align-items: center;
-            font-size: .33rem;
-            font-weight: 500;
-            height: 0.83rem;
-            padding: 0 0.208rem;
-            border-bottom: .02rem solid #F0F0F0;
-            background: white;
-        }
-
-        .ltop img {
-            width: 0.1765rem;
-        }
-
-        .ltop span {
-            flex: 1;
-            text-align: center;
-        }
-
-        /* top end */
-        .info {
-            width: 90%;
-            margin-left: 5%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .info_top {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            margin: .3rem 0 .2rem 0;
-        }
-
-        .info_top_one {
-            color: #333333;
-            font-size: .32rem;
-            font-weight: bold;
-            width: 20%;
-        }
-
-        .activity {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-bottom: .2rem;
-        }
-
-        .activity_cont {
-            width: 47.5%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: white;
-            border-radius: .1rem;
-            overflow: hidden;
-            margin-top: .2rem;
-            box-shadow: 1px 3px 5px #DDDDDD;
-        }
-
-        .activity_cont_top {
-            width: 100%;
-            height: 3.02rem;
-            position: relative;
-        }
-
-        .activity_cont_top>img:nth-child(1) {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .activity_bf {
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-        }
-
-        .activity_cont_bottom {
-            width: 95%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .activity_cont_bottom>span {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            width: 100%;
-        }
-
-        .activity_cont_bottom>span:nth-child(1) {
-            width: 90%;
-            margin-left: 5%;
-            font-size: .28rem;
-            color: #333333;
-            margin-top: .15rem;
-            margin-bottom: .15rem;
-        }
-
-        .activity_cont_bottom>span:nth-child(2) {
-            width: 90%;
-            margin-left: 5%;
-            font-size: .28rem;
-            color: #666666;
-            margin-bottom: .15rem;
-
-        }
-
-        .activity_cont_bottom>span:nth-child(3) {
-            width: 90%;
-            margin-left: 5%;
-            font-size: .2rem;
-            color: #666666;
-            margin-bottom: .15rem;
-        }
-
-        .sparea {
-            width: 95%;
-            height: 95%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 2.5%;
-            margin-left: 2.5%;
-        }
-
-        .sparea>video {
-            width: 100%;
-        }
-
-        .guanbi {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: .8rem;
-        }
-        .van-list__finished-text{
+        .van-checkbox__label {
             width: 100%;
         }
     </style>
 </head>
 
 <body>
-    <div v-cloak id="Vue">
-        <!-- top -->
-        <div class="ltop">
-            <img onclick="javascript :history.back(-1);"
-                src="http://sucai.suoluomei.cn/sucai_zs/images/20200228170103-%E5%BD%A2%E7%8A%B612%402x.png" alt="">
-            <span>品牌活动</span>
-        </div>
-        <!-- top end -->
-        <!-- 品牌活动 -->
-        <div class="info">
-            <div class="info_top">
-                <span class="info_top_one">品牌活动</span>
+    <div id="vue">
+
+        <van-search v-model="value" show-action label="地址" placeholder="请输入搜索关键词" @search="onSearch">
+            <template #action>
+                <div @click="onSearch">搜索</div>
+            </template>
+        </van-search>
+
+        <van-dropdown-menu>
+            <van-dropdown-item v-model="value" :options="option">
+            </van-dropdown-item>
+            <van-dropdown-item title="筛选" ref="item">
+                <van-cell-group>
+                    <van-switch-cell v-model="switch1" title="包邮" />
+                </van-cell-group>
+                <van-cell-group>
+                    <van-switch-cell v-model="switch2" title="团购" />
+                </van-cell-group>
+                <van-button block type="info" @click="onConfirm">确认</van-button>
+            </van-dropdown-item>
+        </van-dropdown-menu>
+
+        <section>
+            <van-card class="s-card">
+                <template #tags>
+                    <van-image round width="65px" height="65px" fit="cover" lazy-load
+                        src="https://img.yzcdn.cn/vant/cat.jpeg" alt="缺省图"></van-image>
+                    <p>秋天的风 </p>
+                    <p>180****2258</p>
+                </template>
+            </van-card>
+        </section>
+
+
+        <section>
+            <!-- 购物车列表 -->
+            <van-checkbox-group v-model="checkedGroup" ref="checkboxGroup">
+                <van-card :price="item.price" :desc="item.desc" v-for="(item,index) in shopcard" :key="index">
+                    <template slot="title">
+                        <!-- 自定义标题部分，主要是为了添加删除商品按钮 -->
+                        <span>{{item.title}}</span>
+                        <span style="float:right;" @click="removeShop(item)">
+                            <van-icon name="delete" />
+                        </span>
+                    </template>
+                    <template slot="thumb">
+                        <!-- 自定义左侧部分，为了添加左侧checkbox -->
+                        <van-checkbox :name="item.title" checked-color="#b90505" icon-size="12px">
+                            <van-image :src="item.thumb"></van-image>
+                        </van-checkbox>
+
+                    </template>
+                    <template slot="bottom">
+                        <!-- 自定义底部，为了实现商品数量功能 -->
+                        <div class="num">
+                            <van-button size="small" @click="minusnum(item)" :disabled="item.num <=1">-</van-button>
+                            <!-- 数量小于1时禁用按钮 -->
+                            {{item.num}}
+                            <van-button size="small" @click="addnum(item)">+</van-button>
+                        </div>
+                    </template>
+                </van-card>
+            </van-checkbox-group>
+            <!-- 统计 -->
+            <div class="count">
+                <van-row style="text-align:center">
+                    <van-col span="6">
+                        <!-- 全选CheckBox部分 -->
+                        <van-checkbox @click="checkAll" v-model="isAllChecked" checked-color="#b90505" icon-size="12px">
+                            全选</van-checkbox>
+                    </van-col>
+                    <van-col span="12" style="font-size:14px">
+                        <!-- 总价格部分 -->
+                        总计：<span style="font-size:16px;font-weight:700">{{'￥'+allcount}}</span>
+                    </van-col>
+                    <van-col span="6">
+                        <!-- 结算按钮 -->
+                        <van-button round color="#b90505">结算</van-button>
+                    </van-col>
+                </van-row>
             </div>
-            <!-- <div class="activity"> -->
-            <van-list class="activity" v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-                <div class="activity_cont" v-for="(item,index) in activitylist" :key="index">
-                    <div class="activity_cont_top">
-                        <img :src="item.img" alt="">
-                        <img class="activity_bf" @click="play(item.post_source)"
-                            src="https://sucai.suoluomei.cn/sucai_zs/images/20200523112232-bofanganniu.png" alt="">
-                    </div>
+        </section>
 
-                    <div class="activity_cont_bottom">
-                        <span>{{item.post_title}}</span>
-                        <span>分享嘉宾：{{item.post_author}}</span>
-                        <span>{{item.published_time}}</span>
-                    </div>
-                </div>
-            </van-list>
-        </div>
-        <!-- 播放视频 -->
-        <div class="sparea" v-if="videoshow">
-            <img class="guanbi" src="https://sucai.suoluomei.cn/sucai_zs/images/20200523114951-guanbicopy.png" alt=""
-                @click="end">
-            <video width="320" height="240" controls>
-                <source :src="videourl" type="video/mp4">
-            </video>
-        </div>
     </div>
-</body>
-<script src="https://cdn.suoluomei.com/common/js/jquery-2.1.4.min.js"></script>
-<script src="https://cdn.suoluomei.com/common/js2.0/vue/v2.5.16/vue.js"></script>
-<script src="https://cdn.suoluomei.com/common/js2.0/npm/vant@2.2/lib/vant.min.js"></script>
-<script>
-    var getUrl = "https://datitest.zealcdn.cn/public/index.php/"
-    new Vue({
-        el: "#Vue",
-        data: {
-            videoshow: false,
-            videourl: "",
-            activitylist: [
 
-            ],
-            loading: false,
-            finished: false,
-            page: 1
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.2/lib/vant.min.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+<script src="https://sucai.suoluomei.cn/sucai_zs/file/20191217145416-area.js"></script>
+<!-- 高德地图 -->
+<script type="text/javascript"
+    src="https://webapi.amap.com/maps?v=1.4.1&key=58b4d21fc077537dda2dcbe756a1c9&plugin=AMap.Geocoder"></script>
+
+<script>
+
+    Vue.use(vant.Lazyload, {
+        lazyComponent: true
+    });
+
+    new Vue({
+        el: '#vue',
+        data() {
+            return {
+                show: false,
+                areaList: are,
+                value: 0,
+                switch1: false,
+                switch2: false,
+                option: [
+                    { text: '全部商品', value: 0 },
+                    { text: '新款商品', value: 1 },
+                    { text: '活动商品', value: 2 }
+                ], isAllChecked: false, checkedGroup: [], shopcard: [{
+                    id: '1',
+                    title: '进口香蕉',
+                    desc: '约250g，2根',
+                    price: 200,
+                    num: 1,
+                    thumb: 'https://img.yzcdn.cn/public_files/2017/10/24/2f9a36046449dafb8608e99990b3c205.jpeg'
+                }, {
+                    id: '2',
+                    title: '陕西蜜梨',
+                    desc: '约600g',
+                    price: 690,
+                    num: 1,
+                    thumb: 'https://img.yzcdn.cn/public_files/2017/10/24/f6aabd6ac5521195e01e8e89ee9fc63f.jpeg'
+                }, {
+                    id: '3',
+                    title: '美国伽力果',
+                    desc: '约680g/3个',
+                    price: 2680,
+                    num: 1,
+                    thumb: 'https://img.yzcdn.cn/public_files/2017/10/24/320454216bbe9e25c7651e1fa51b31fd.jpeg'
+                }]
+            }
+        },
+        mounted() {
+            var key = '363f73cc6d1cd03f815332fc5ed430e9'
+            var address = '河南省商丘市'
+            this.getLocation();
+        }, computed: {
+            //computed中，判断全选状态
+            isAllChecked() {
+                console.log(this.checkedGroup.length);
+                console.log(this.shopcard.length);
+                if (this.checkedGroup.length === this.shopcard.length && this.shopcard.length !== 0) { //选中数与商品总数相等并且购物车内存在商品
+                    return true //表示全选状态
+                } else {
+                    return false //表示未全选
+                }
+            },//computed中
+            allcount() {
+                let sumup = 0
+                for (let i = 0; i < this.shopcard.length; i++) {
+                    if (this.checkedGroup.find(item => { //判断是否选中商品，未选中不计算在内
+                        return item === this.shopcard[i].title
+                    })) {
+                        sumup += this.shopcard[i].num * this.shopcard[i].price
+                    } else {
+                        continue
+                    }
+                }
+                return sumup
+            }
         },
         methods: {
-            play(url) {
-                this.videourl = url
-                this.videoshow = true
-
+            //地址选择开始
+            onSearch() { },
+            toSelect() {
+                this.show = true;
             },
-            end() {
-                this.videoshow = false
+            confirmFn(value) {
+                this.show = false;
+                console.log(value)
             },
-            // 请求公共方法
-            ajax(type, url, params, cb) {
-                $.ajax({
-                    type: type,
-                    url: url,
-                    data: params,
-                    dataType: "json",
-                    // beforeSend: function (xhr) {
-                    //   xhr.setRequestHeader("X-Custom-Header1", "Bar");
-                    // },
-                    success: function (response) {
-                        cb(response)
+            cancelFn() {
+                this.show = false;
+            },
+            //地址选择结束
+            onConfirm() {
+                this.$refs.item.toggle();
+            }, formatPrice(price) {
+                return (price / 100).toFixed(2);
+            }//methods中，点击全选按钮时
+            ,
+            checkAll() {
+                if (this.checkedGroup.length !== 0) { //有商品卡片选中
+                    if (this.checkedGroup.length === this.shopcard.length) { //总商品数与选中商品卡片数相等，说明此时已全选
+                        this.$refs.checkboxGroup.toggleAll(false); //令所有选中的反选，即全不选
+                    } else { //商品卡片数部分选中
+                        this.$refs.checkboxGroup.toggleAll(true); //令所有商品全部选中
                     }
-                });
-            },
-            getList() {
-                let that = this
-                that.ajax("post", getUrl + "user/Hufu/more_vido", {
-                    page: that.page
-                }, function (res) {
-                    that.loading = false;
-                    console.log(res)
-                    if (res != "") {
-                        let mide = that.page + 1
-                        that.page = mide
-                        let arry = that.activitylist.concat(res) //前提是livehose是数组
-                        that.activitylist = arry
-                    }
-                    else {
-                        that.loading = false;
-                        that.finished = true;
-                    }
-                    if (that.activitylist.length == 0) {
-                        that.loading = false;
-                        that.finished = true;
-                    }
-                })
-            },
-            onLoad() {
-                this.getList()
-            },
-        },
-        created() {
-            //     let that = this
-            // $.ajax({
-            //     type: "get", //请求方式
-            //     async: false,
-            //     url: "",
-            //     data: {},        //传值给后台
-            //     dataType: "json",
-            //     success: function (res) {
-            //         console.log(res)
-            //
-            //     },
-            // });
-        }
-    })
-</script>
-<script>
-        (function (win, doc) {
-            if (!win.addEventListener) return;
-            var html = document.documentElement;
-
-            function setFont() {
-                var cliWidth = html.clientWidth;
-                if (cliWidth > 750) {
-                    cliWidth = 750;
+                } else { //没有商品卡片选中，直接全选
+                    this.$refs.checkboxGroup.toggleAll(true);
                 }
-                html.style.fontSize = 100 * (cliWidth / 750) + 'px';
+            }, addnum(item) {
+                this.shopcard.find(element => {
+                    return element.title === item.title
+                }).num = parseInt(item.num) + 1
+            },
+            minusnum(item) {
+                this.shopcard.find(element => {
+                    return element.title === item.title
+                }).num = parseInt(item.num) - 1
+            },
+            //methods中，点击删除商品图标按钮时
+            removeShop(item) {
+                for (let i = 0; i < this.shopcard.length; i++) {
+                    if (item.title === this.shopcard[i].title) {
+                        let index = this.checkedGroup.indexOf(item.title)
+                        this.shopcard.splice(i, 1) //移除商品
+                        if (index === -1) {
+                            return
+                        }
+                        this.checkedGroup.splice(index, 1) //移除checkedGroup中刚刚删除的商品，不然不会即时刷新
+                    }
+                }
+            },// 获取经纬度信息
+            getLocation() {
+
+                let that = this
+                var map = new AMap.Map('container', {
+                    resizeEnable: true
+                });
+                AMap.plugin('AMap.Geolocation', function () {
+                    var geolocation = new AMap.Geolocation({
+                        enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                        timeout: 10000,          //超过10秒后停止定位，默认：5s
+                        buttonPosition: 'RB',    //定位按钮的停靠位置
+                        buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                        zoomToAccuracy: true,   //定位成功后是否自动调整地图视野到定位点
+
+                    });
+                    map.addControl(geolocation);
+                    geolocation.getCurrentPosition(function (status, result) {
+                        if (status == 'complete') {
+                            //that.onComplete(result)
+                            console.log("ioko");
+                        } else {
+                            that.onError(result)
+                        }
+                    });
+                });
             }
-            win.addEventListener('resize', setFont, false)
-            doc.addEventListener('DOMContentLoaded', setFont, false)
-        })(window, document);
+
+        }
+    });
+
+
 </script>
+
 
 </html>
